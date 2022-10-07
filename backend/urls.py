@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from .views import TempViewset
+from .views import TempViewset, UserViewSet
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.routers import DefaultRouter
+from .auth.views import LoginViewSet, RegistrationViewSet, RefreshViewSet
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,6 +34,10 @@ schema_view = get_schema_view(
 )
 router = DefaultRouter()
 router.register(r'temp', TempViewset, basename='temp')
+router.register(r'auth/login', LoginViewSet, basename='auth-login')
+router.register(r'auth/register', RegistrationViewSet, basename='auth-register')
+router.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
+router.register(r'user', UserViewSet, basename='user')
 
 urlpatterns = [
     re_path(r'^openapi(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),

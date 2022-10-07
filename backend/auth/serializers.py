@@ -1,21 +1,11 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Temp, User
 from rest_framework_simplejwt.settings import api_settings
 from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ObjectDoesNotExist
 
-class TempSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Temp
-        fields = ['id']
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'password', 'name', 'email', 'phone', 'is_active']
-        read_only_field = ['is_active', 'created', 'updated']
+from ..serializers import UserSerializer
+from ..models import User
 
 
 class LoginSerializer(TokenObtainPairSerializer):
